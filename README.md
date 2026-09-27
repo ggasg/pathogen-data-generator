@@ -11,6 +11,28 @@ An event-driven, schema-validated synthetic data generator designed to simulate 
 * **Containerized Deployment:** Multi-stage Docker build utilizing `python:3.14-slim` and `librdkafka` for reliable cross-platform execution.
 * **Configurable Logging:** Dynamic log level control for monitoring publishing throughput in real time.
 
+## Schemas
+
+The generator emits two distinct event types serialized via Confluent Schema Registry using JSON Schema contracts stored in the schemas/ directory:
+
+### Environment Update (pathogen-environment-events)
+Tracks real-time fluctuations in ambient conditions for specific physical surfaces.
+
+* event_type: String (ENVIRONMENT_UPDATE)
+* surface_id: String (Unique identifier for the surface object, e.g., surf_stainless_01)
+* material: String (Physical substrate category: stainless_steel, plastic, or wood)
+* timestamp: Number (Epoch timestamp of the telemetry reading)
+* temp: Number (Ambient temperature in Celsius, ranged 18.0 to 30.0)
+* rh: Number (Relative humidity percentage, ranged 30.0 to 70.0)
+
+### Touch Event (pathogen-touch-events)
+Simulates discrete human-surface interactions and contact exposure vectors.
+
+* event_type: String (TOUCH_EVENT)
+* surface_id: String (Unique identifier for the surface object interacted with)
+* material: String (Physical substrate category)
+* timestamp: Number (Epoch timestamp of the contact event)
+* agent_id: String (Identifier for the interacting human agent, e.g., agent_104)
 ---
 
 ## Repository Structure
